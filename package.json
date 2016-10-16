@@ -2,7 +2,7 @@
   "name": "app-pnw3dev",
   "version": "1.0.0",
   "description": "Pacific North Web Development Company Web & Mobile Application",
-  "main": "index.html",
+  "main": "./src/app.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "firebase serve",
