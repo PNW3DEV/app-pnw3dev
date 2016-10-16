@@ -1,0 +1,39 @@
+{
+  "name": "app-pnw3dev",
+  "version": "1.0.0",
+  "description": "Pacific North Web Development Company Web & Mobile Application",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "firebase serve",
+    "deploy": "firebase deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PNW3DEV/app-pnw3dev.git"
+  },
+  "keywords": [
+    "pnw3dev",
+    "web",
+    "app",
+    "mobile",
+    "firebase",
+    "spa",
+    "riotjs"
+  ],
+  "author": "Pacific North Web Development, Desmond G. Jones",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PNW3DEV/app-pnw3dev/issues"
+  },
+  "homepage": "https://github.com/PNW3DEV/app-pnw3dev#readme",
+  "dependencies": {
+    "browserify": "^13.1.0",
+    "css-concat": "0.0.4",
+    "firebase-tools": "^3.0.8"
+  },
+  "devDependencies": {
+    "cordova": "^6.3.1",
+    "riotjs": "^1.0.4"
+  }
+}
