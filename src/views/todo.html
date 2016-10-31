@@ -1,0 +1,97 @@
+<todo>
+    <div class="container">
+        <div class="panel panel-primary chat-bg" style="align-items:center; justify-content:center;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">TODO List</h3>
+                </div>
+                <div class="list-group">
+                    <div each={ todos } class="list-group-item" key={ id }>
+                        <div class="pull-right">
+                            <button class="btn btn-xs btn-danger" onClick={ parent.removeTodo }>
+                                Delete
+                            </button>
+                        </div>
+                        { name }
+                    </div>
+                    <div class="list-group-item">
+                        <form id="todo-form" name="todo-form" class="list-group-item" onSubmit={ createTodo }>
+                            <input text="form-control" type="text" name="todoInput" onKeyUp={ edit }
+                            placeholder="Enter a message and press enter" />
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script>
+
+        // ASSIGN THIS TO SELF
+        var self = this;
+        self.todoToAdd = '';
+
+        // CREATE JS-DATA STORE
+        var store = new JSData.DS();
+        // CONNECT ADAPTER TO FIREBASE CLOUD DB
+        var firebaseAdapter = new DSFirebaseAdapter({
+            basePath: 'https://app-pnw3dev.firebaseio.com'
+        });
+        store.registerAdapter('firebase', firebaseAdapter, { default: true });
+
+        // CREATE USER/MESSAGE STORE
+        var TodoStore = store.defineResource({
+            name: 'todo',
+            afterInject: function () {
+                TodoStore.emit('change');
+            },
+            afterEject: function () {
+                TodoStore.emit('change');
+            }
+        });
+
+        // ITERATE OVER RESOURCES
+        for (var resourceName in store.definitions) {
+            var Resource = store.definitions[resourceName];
+            var ref = firebaseAdapter.ref.child(Resource.endpoint);
+            // Inject items into the store when they're added to Firebase
+            // Update items in the store when they're modified in Firebase
+            ref.on('child_changed', function(dataSnapshot) {
+                var data = dataSnapshot.val();
+                if (data[Resource.idAttribute]) {
+                    Resource.inject(data);
+                }
+            });
+            // Eject items from the store when they're removed from Firebase
+            ref.on('child_removed', function (dataSnapshot) {
+                var data = dataSnapshot.val();
+                if (data[Resource.idAttribute]) {
+                    Resource.eject(data[Resource.idAttribute]);
+                }
+            });
+        } // END LOOP
+        // UPDATE USER/MSG LIST
+        TodoStore.on('change', function() {
+            self.todos = TodoStore.getAll();
+            self.update();
+        });
+        // GET FIRECHAT STORE
+        self.on('mount', function() {
+            // Pull the initial list of todos from Firebase
+            TodoStore.findAll();
+        });
+        // ASSIGN TARGET
+        edit(e) {
+            self.todoToAdd = e.target.value;
+        }
+        // ADD USER/MSG
+        createTodo() {
+            if (self.todoToAdd) {
+                TodoStore.create({ name: self.todoToAdd }).then(function () {
+                    self.todoToAdd = self.todoInput.value = '';
+                });
+            }
+        }
+        // DELETE USER/MSG
+        removeTodo(e) {
+            TodoStore.destroy(e.item.id);
+        }
+    </script>
+</todo>

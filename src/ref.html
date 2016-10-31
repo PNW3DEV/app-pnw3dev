@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>js-data-firebase & Riot</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+    <!-- <link href="./example.css" rel="stylesheet"> -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.1.2/firebase.js"></script>
+    <script src="https://github.com/js-data/js-data/releases/download/2.0.0-rc.1/js-data.min.js"></script>
+    <script src="https://github.com/js-data/js-data-firebase/releases/download/2.0.0-rc.1/js-data-firebase.min.js"></script>
+    <script src="//cdn.jsdelivr.net/g/riot@2.2(riot.min.js+compiler.min.js)"></script>
+    <script src="./views/todo.html" type="riot/tag"></script>
+    <!-- <script src="js/routes.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/riot/2.5/riot+compiler.min.js"></script>
+    </script>
+</head>
+
+<body>
+    <div class="example-masthead">
+    </div>
+    <div class="container" style="margin-top: 100px">
+        <div class="col-sm-5">
+            <h2 class="page-header">js-data-firebase & Riot example</h2>
+            <example></example>
+        </div>
+        <div>
+
+        </div>
+    </div>
+    <script>
+        riot.mount('*')
+        hljs.initHighlightingOnLoad();
+        // riot.compile(function() {
+        //   riot.mount('example')
+        //   riot.route.start(true)
+        // })
+    </script>
+</body>
+
+</html>
