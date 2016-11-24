@@ -1,23 +1,25 @@
 <todo>
-    <div class="container">
+    <nav />
+    <div class="container" style="padding-left:.5em;padding-right:.5em;">
         <div class="panel panel-primary chat-bg" style="align-items:center; justify-content:center;">
                 <div class="panel-heading">
                     <h3 class="panel-title">TODO List</h3>
                 </div>
                 <div class="list-group">
-                    <div each={ todos } class="list-group-item" key={ id }>
-                        <div class="pull-right">
-                            <button class="btn btn-xs btn-danger" onClick={ parent.removeTodo }>
+                    <ul each={ todos } class="list-group-item" key={ id }>
+                        <li>{ name }
+                        <!-- <div class="pull-right"> -->
+                            <button class="btn btn-xs btn-danger" style="float:right;margin-right:8em; margin-bottom:0em;" onClick={ parent.removeTodo }>
                                 Delete
                             </button>
-                        </div>
-                        { name }
-                    </div>
+                        <!-- </div> --></li>
+                    </ul>
                     <div class="list-group-item">
                         <form id="todo-form" name="todo-form" class="list-group-item" onSubmit={ createTodo }>
                             <input text="form-control" type="text" name="todoInput" onKeyUp={ edit }
                             placeholder="Enter a message and press enter" />
                         </form>
+                        <button class="btn btn-xs btn-danger" onclick="{ createTodo }">Add</button>
                     </div>
                 </div>
         </div>

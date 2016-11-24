@@ -1,0 +1,51 @@
+<contact-detail>
+    <navi>something<a each={ data } onclick="riot.route('/{ id }')">{ title }</a></navi>
+    <button onclick="{ writeFbData }">Write Data</button>
+    <button onclick="{ readFBData }">Read Data</button>
+
+    <article>
+      <h1>{ page.title || 'Not found' }</h1>
+      <p>{ page.body || 'Specified id is not found.' }</p>
+    </article>
+
+    <article>
+        <div id="contacts"></div>
+        <div each>{ contactObj }</div>
+    </article>
+    <script>
+        this.mixin(app);
+        var self = this;
+        writeFbData() {
+            firebase.auth().onAuthStateChanged(function(user) {
+                var userId = user.uid;
+                firebase.database().ref('contacts').push({aname:'second contact'});
+            });
+        }
+        var cnto = localStorage.cnto || {};
+        // readFBData = function() {
+            firebase.auth().onAuthStateChanged(function(user) {
+                var userId = user.uid;
+                var contactRefs = firebase.database().ref('contacts/');
+                var key = contactRefs.key;                 // key === "ada"
+                key = contactRefs.child("name").key;  // key === "last"
+                contactRefs.on('value', function(data) {
+                    this.contactObj = JSON.stringify(data.val());
+                    // self.cnto = contactObj;
+                    localStorage.cnto = JSON.stringify(this.contactObj,null,2);
+                    var keyVal = data.key;
+                    app.setCnto(JSON.stringify(this.contactObj,null,2));
+                    self.kv = keyVal;
+                    console.log('contactObj FROM REALTIME DB: ' + JSON.stringify(this.contactObj,null,2));
+                    console.dir(this.contactObj)
+                    console.log('keyVal FROM REALTIME DB: ' + JSON.stringify(keyVal,null,2));
+                    // document.getElementById('contacts').textContent = JSON.stringify(key);
+                });
+            });
+        // }
+        // readFBData();
+        self.update();
+        this.on('mount', function() {
+            // readFBData();
+        });
+    </script>
+</contact-detail>

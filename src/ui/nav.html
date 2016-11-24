@@ -1,0 +1,121 @@
+<nav if="{ !hideNav}" class="{
+        scoped:!hideNav,
+        scope:hideNav
+    }">
+    <!-- <div id="navOpen" class="scope" if="{ hideNav }" style="padding-top
+    1em;">
+        <i class="mdi mdi-menu" onclick="{ openPane }"></i>
+    </div> -->
+    <div id="nav" class="scoped" if="{ !hideNav }">
+        <i class="mdi mdi-close" onclick="{ closePane }"></i>
+        <a each={ links } onclick="riot.route('{ url }')" class={ selected: parent.selectedId === url }>
+          { name }
+        </a>
+    </div>
+
+  <script>
+    var self = this;
+
+    this.links = [
+      { name: "Home", url: "api/console/" },
+      { name: "Todos", url: "api/todo/" },
+      { name: "First", url: "api/first/" },
+      { name: "Project List", url: "api/second/" },
+      { name: "Contacts", url: "api/contact/" },
+      { name: "Contact Details", url: "api/contact-detail/1" }
+    ]
+
+    // var r = riot.route.create()
+    // r(highlightCurrent)
+    //
+    // function highlightCurrent(id) {
+    //   self.selectedId = id
+    //   self.update()
+    // }
+    closePane() {
+        hideNav = true;
+        // document.getElementById('nav').classList.remove('scoped');
+        // document.getElementById('nav').classList.add('scope');
+        // document.getElementById('navOpen').classList.remove('scope');
+        // document.getElementById('navOpen').classList.add('scoped');
+        document.getElementById('nav').style.display = 'none';
+        self.update();
+    }
+    openPane() {
+        hideNav = false;
+        // document.getElementById('nav').classList.remove('scope');
+        // document.getElementById('nav').classList.add('scoped');
+        // document.getElementById('navOpen').classList.remove('scoped');
+        // document.getElementById('navOpen').classList.add('scope');
+        self.update();
+    }
+    this.on('mount', function() {
+        hideNav = true;
+        if (hideNav) {
+            // document.getElementById('nav').style.display = 'none';
+        }
+        riot.update()
+    });
+  </script>
+
+  <style scoped>
+    .mdi { font-size: 200%; }
+    .scoped {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      box-sizing: border-box;
+      font-family: sans-serif;
+      text-align: center;
+      color: #666;
+      background: #333;
+      width: 10em;
+      /*transition: width .2s;*/
+    }
+    .scoped:hideNav {
+        display: none;
+    }
+    .scope {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      box-sizing: border-box;
+      font-family: sans-serif;
+      text-align: center;
+      color: #666;
+      background: #fff;
+      width: 10em;
+      /*transition: width .2s;*/
+    }
+    .closed:scope {
+        width:0em;
+    }
+    /*:scope:hover {
+      width: 60px;
+    }*/
+    a {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 .8em;
+      color: white;
+      text-decoration: none;
+      background: #444;
+    }
+    a:hover {
+      background: #666;
+      cursor:pointer;
+    }
+    a.selected {
+      background: teal;
+    }
+    .none {
+        background: transparent;
+
+    }
+  </style>
+</nav>

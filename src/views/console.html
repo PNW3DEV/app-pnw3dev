@@ -1,0 +1,76 @@
+<console>
+    <bar-main />
+    <nav />
+    <div id="navOpen" class="scope" style="padding-top
+    1em;float:right;" onclick="{ openPane }">
+        <i class="mdi mdi-menu"></i>
+    </div>
+    <panes-right />
+    <navi><a each={ data } onclick="riot.route('/{ id }')">{ title }</a></navi>
+    <button onclick="{ readRoutes }">Read Routes</button>
+
+
+  <script>
+
+  </script>
+
+  <style scoped>
+    :scope {
+      display: block;
+      font-family: sans-serif;
+      margin-right: 0;
+      margin-bottom: 130px;
+      margin-left: 50px;
+      padding: 1em;
+      text-align: center;
+      color: #666;
+    }
+    ul {
+      padding: 10px;
+      list-style: none;
+    }
+    li {
+      display: inline-block;
+      margin: 5px;
+    }
+    a {
+      display: block;
+      background: #f7f7f7;
+      text-decoration: none;
+      width: 150px;
+      height: 150px;
+      line-height: 150px;
+      color: inherit;
+    }
+    a:hover {
+      background: #eee;
+      color: #000;
+    }
+    @media (min-width: 480px) {
+      :scope {
+        margin-right: 200px;
+        margin-bottom: 0;
+      }
+    }
+    :scope {
+      display: block;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 1em;
+      text-align: center;
+      color: #666;
+    }
+    navi {
+      display: block;
+      border-bottom: 1px solid #666;
+      padding: 0 0 1em;
+    }
+    navi > a {
+      display: inline-block;
+      padding: 0 .8em;
+    }
+    navi > a:not(:first-child) {
+      border-left: 1px solid #eee;
+    }
+  </style>
+</console>

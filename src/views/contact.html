@@ -1,0 +1,29 @@
+<contact>
+    <h1>Contact List</h1>
+    <div each="{ firebase.auth().currentUser }"></div>
+    <div id="clist" style="padding:.5em;"></div>
+    <script>
+        this.on('mount', function() {
+            // firebase.auth().onAuthStateChanged(function(user) {
+            // 	var userId = user.uid;
+            // 	firebase.database().ref().once('value').then(function(snap) {
+            // 		dbv = snap.val();
+            // 		localStorage.dbv= JSON.stringify(dbv);
+            // 		console.log(JSON.stringify(dbv));
+            // 	});
+            // });
+            firebase.auth().onAuthStateChanged(function(user) {
+                var userId = user.uid;
+                firebase.database().ref('contacts/name').on('value', function(snap) {
+                    cList = snap.val();
+                    localStorage.contactList = JSON.stringify(cList);
+                    console.log(JSON.stringify(cList));
+                });
+            });
+            // contactList = {};
+            contactList = JSON.parse(localStorage.contactList);
+            // console.dir('CLIST' + contactList[''].name);
+            document.getElementById('clist').textContent = JSON.stringify(firebase.auth().currentUser);
+        });
+    </script>
+</contact>

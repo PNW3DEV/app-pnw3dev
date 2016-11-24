@@ -1,0 +1,66 @@
+<login>
+    <input id="email" type="email" name="email" />
+    <input id="password" type="password" name="password" />
+    <button onclick="{ signIn }">Sign In</button>
+    <script>
+        // --------------------------------------
+        // EMAIL CHANGE REAUTHENTICATION
+        // --------------------------------------
+        signIn() {
+            emailSignIn();
+        }
+        function emailSignIn() {
+            firebase.auth().onAuthStateChanged(function(user) {
+                console.log('email signing');
+                if (!firebase.auth().currentUser) {
+                    var email = document.getElementById('email');
+                    var password = document.getElementById('password').value;
+                    // EMAIL ADDRESS REQUIRED
+                    if (email.value.length < 1) {
+                        // usr.trigger('untouched');
+                        // usr.trigger('invalid', 'Company email address required');
+                        console.info('Email required');
+                        return;
+                    }
+                    if (password.length < 1) {
+                        // pwd.trigger('untouched');
+                        // pwd.trigger('invalid', 'Password required');
+                        console.info('Password required');
+                        return;
+                    }else {
+                        firebase.auth().signOut();
+                    }
+                    // Sign in with email and pass.
+                    // [START authwithemail]
+                    firebase.auth().signInWithEmailAndPassword(email.value, password).then(function() {
+                        // preAuth = false;
+                        alert('LOGIN SUCCESSFUL');
+                        riot.update();
+                    }).catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = JSON.stringify(error.code);
+                        var errorMessage = error.message;
+                        switch (error.code) {
+                            case 'auth/wrong-password':
+                                // pwd.trigger('invalid', 'Password is incorrect.');
+                                break;
+                            case 'auth/user-not-found':
+                                // usr.trigger('invalid', 'Account not found');
+                                break;
+                            case 'auth/invalid-email':
+                                // usr.trigger('invalid', 'Invalid email (e.g. carl@poolguys.com)');
+                                break;
+                            default:
+                                console.error(JSON.stringify(error));
+                                // usr.trigger('invalid', error.message);
+
+                        }
+                    }); // END auth/signIn listener
+                }else {
+                    // preAuth = false;
+                    // console.log(error);
+                }
+            });
+        } // [END EMIAL SIGN IN]
+    </script>
+</login>

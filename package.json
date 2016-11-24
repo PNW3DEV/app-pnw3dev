@@ -6,7 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "firebase serve",
-    "deploy": "firebase deploy"
+    "deploy": "firebase deploy",
+    "copy-img": "cp -r ./src/images/** ./dist/images/",
+    "copy-assets": "cp -r ./src/lib/* ./dist/lib/",
+    "build-css": "cat ./src/css/*/*/* > ./dist/css/main.css",
+    "prefix-css": "cd ./dist/css/ && postcss --use autoprefixer *.css -o build.css && rm main.css && cd ./../../",
+    "minify-css": "cleancss -o ./dist/css/build.min.css ./dist/css/main.css",
+    "build-js": "riot ./src/views/ ./src/dist/js/views.js --ext html && riot ./src/ui/ ./src/dist/js/ui.js --ext html",
+    "minify-js": "uglifyjs ./src/dist/js/views.js ./src/dist/js/ui.js -o ./src/dist/js/all.min.js --source-map all.min.js.map && mv all.min.js.map ./src/dist/js/all.min.js.map",
+    "build-dist": "npm run copy-img && npm run copy-assets && npm run build-css && npm run minify-css && npm run build-js && npm run minify-js",
+    "clean-distribution": "rm ./dist/*/*/*/*"
   },
   "repository": {
     "type": "git",
